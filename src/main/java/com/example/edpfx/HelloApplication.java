@@ -8,10 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -29,7 +26,9 @@ public class HelloApplication extends Application {
     @Override
 
     public void start(Stage stage) {
-        stage.setTitle("TIMETABLE!");
+        stage.setWidth(500);
+        stage.setHeight(500);
+        stage.setTitle("EDP_PROJECT");
         //var label = new Label("Hello, JavaFX");
         GridPane pane = new GridPane();
         pane.getChildren().add(new Label("Hello World!"));
@@ -61,6 +60,9 @@ public class HelloApplication extends Application {
         view3.setPreserveRatio(true);
         Button button3 = new Button("",view3);
         button3.setMinWidth(300);
+        button3.setOnAction(e->{
+            ViewSchedule(stage);
+        });
         button3.prefHeightProperty().bind(pane.heightProperty().divide(5));
         button3.prefWidthProperty().bind(pane.widthProperty());
         button3.setStyle("-fx-background-color: #044489; ");
@@ -102,12 +104,7 @@ public class HelloApplication extends Application {
 
 
 
-        button3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("!");
-            }
-        });
+
 
         button4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -132,6 +129,8 @@ public class HelloApplication extends Application {
         //stage.setScene(scene);
         //stage.show();
         private void Schedulelecture(Stage stage) {
+        stage.setHeight(240);
+        stage.setWidth(450);
         String[] lectureinfo = new String[4];
 
             GridPane LecturePane = new GridPane();
@@ -230,11 +229,8 @@ public class HelloApplication extends Application {
             exit.setMinWidth(300);
             LecturePane.add(exit,20,6);
 
-            exit.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    stage.setScene(scene);
-                }
+            exit.setOnAction(e->{
+                start(stage);
             });
             //*******************SUBMIT BUTTON********************
             Button submit = new Button("SUBMIT");
@@ -297,6 +293,8 @@ public class HelloApplication extends Application {
         private void RemoveLecture(Stage stage){
 
         GridPane grid = new GridPane();
+        stage.setWidth(450);
+        stage.setHeight(300);
 
 
         ///Thinking we could have a dropdown box for the day
@@ -353,7 +351,7 @@ public class HelloApplication extends Application {
             menu.prefHeightProperty().bind(grid.heightProperty());
             menu.prefHeightProperty().bind(grid.heightProperty().divide(5));
             menu.setMinWidth(300);
-            menu.setOnAction(e-> stage.setScene(scene));
+            menu.setOnAction(e-> start(stage));
 
             grid.add(menu,0,4);
 
@@ -378,6 +376,144 @@ public class HelloApplication extends Application {
 
             stage.setScene(remove_scene);
         stage.show();
+
+
+
+        }
+    //**************************VIEW SCHEDULE****************************
+
+        private void ViewSchedule(Stage stage){
+        stage.setWidth(900);
+        stage.setHeight(500);
+        GridPane grid = new GridPane();
+        //grid.setGridLinesVisible(true);
+        grid.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-style: solid;");
+        grid.setVgap(5.0);
+        grid.setHgap(5.0);
+
+
+            HBox hbox = new HBox();
+        //**************************EXIT BUTTON****************************
+            Button exit = new Button("EXIT");
+            exit.setOnAction(e->{
+                start(stage);
+            });
+            exit.setAlignment(Pos.CENTER);
+            exit.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
+            exit.setMinWidth(900);
+            exit.setMinHeight(20);
+            exit.prefWidthProperty().bind(grid.widthProperty());
+            exit.prefHeightProperty().bind(grid.heightProperty().divide(30));
+            grid.add(exit,0,0);
+            //**************************BACKGROUND IMAGE SETUP****************************
+            Image image = new Image(Objects.requireNonNull(getClass().getResource("/com/example/edpfx/img_7.png")).toExternalForm());
+            ImageView imageView = new ImageView(image);
+            imageView.fitWidthProperty().bind(grid.widthProperty());
+            imageView.fitHeightProperty().bind(grid.heightProperty());
+            imageView.setPreserveRatio(false);
+            //**************************TEXTFIELDS****************************
+            HBox hbox1 = new HBox();
+
+            //Time
+            TextField Time = new TextField();
+            Time.prefHeightProperty().bind(grid.heightProperty().divide(16));
+            Time.setEditable(false);
+            Time.setText("TIME");
+            Time.setAlignment(Pos.CENTER);
+            Time.setFont(Font.font("Comic Sans",FontWeight.BOLD,15));
+            Time.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+            Time.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            Time.maxHeightProperty().bind(grid.heightProperty());
+            hbox1.getChildren().add(Time);
+            // Monday
+            TextField Monday = new TextField();
+            Monday.prefHeightProperty().bind(grid.heightProperty().divide(16));
+            Monday.setEditable(false);
+            Monday.setText("MONDAY");
+            Monday.setAlignment(Pos.CENTER);
+            Monday.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
+            Monday.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+            Monday.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            Monday.maxHeightProperty().bind(grid.heightProperty());
+            hbox1.getChildren().add(Monday);  // Add Monday to HBox
+
+// Tuesday
+            TextField Tuesday = new TextField();
+            Tuesday.prefHeightProperty().bind(grid.heightProperty().divide(16));
+            Tuesday.setEditable(false);
+            Tuesday.setText("TUESDAY");
+            Tuesday.setAlignment(Pos.CENTER);
+            Tuesday.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
+            Tuesday.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+            Tuesday.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            Tuesday.maxHeightProperty().bind(grid.heightProperty());
+            hbox1.getChildren().add(Tuesday);  // Add Tuesday to HBox
+
+// Wednesday
+            TextField Wednesday = new TextField();
+            Wednesday.prefHeightProperty().bind(grid.heightProperty().divide(16));
+            Wednesday.setEditable(false);
+            Wednesday.setText("WEDNESDAY");
+            Wednesday.setAlignment(Pos.CENTER);
+            Wednesday.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
+            Wednesday.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+            Wednesday.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            Wednesday.maxHeightProperty().bind(grid.heightProperty());
+            hbox1.getChildren().add(Wednesday);  // Add Wednesday to HBox
+
+// Thursday
+            TextField Thursday = new TextField();
+            Thursday.prefHeightProperty().bind(grid.heightProperty().divide(16));
+            Thursday.setEditable(false);
+            Thursday.setText("THURSDAY");
+            Thursday.setAlignment(Pos.CENTER);
+            Thursday.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
+            Thursday.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+            Thursday.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            Thursday.maxHeightProperty().bind(grid.heightProperty());
+            hbox1.getChildren().add(Thursday);  // Add Thursday to HBox
+
+// Friday
+            TextField Friday = new TextField();
+            Friday.prefHeightProperty().bind(grid.heightProperty().divide(16));
+            Friday.setEditable(false);
+            Friday.setText("FRIDAY");
+            Friday.setAlignment(Pos.CENTER);
+            Friday.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
+            Friday.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+            Friday.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            Friday.maxHeightProperty().bind(grid.heightProperty());
+            hbox1.getChildren().add(Friday);  // Add Friday to HBox
+
+
+
+
+
+            TextField info2 = new TextField();
+            info2.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+
+            info2.prefHeightProperty().bind(grid.heightProperty().divide(10));
+            info2.maxWidthProperty().bind(grid.widthProperty().divide(6).subtract(grid.widthProperty().divide(100)));
+            info2.maxHeightProperty().bind(grid.heightProperty());
+
+
+
+            grid.add(hbox1,0,2);
+
+
+
+            //**************************STAGE SETUP****************************
+            StackPane stack = new StackPane();
+            stack.getChildren().add(imageView);
+            stack.getChildren().add(grid);
+
+
+            Scene schedule = new Scene(stack,900,500);
+            stage.setMinWidth(900);
+            stage.setMinHeight(500);
+            stage.setScene(schedule);
+            stage.show();
+
 
 
 
