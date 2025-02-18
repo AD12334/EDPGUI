@@ -134,53 +134,40 @@ public class HelloApplication extends Application {
             GridPane LecturePane = new GridPane();
             LecturePane.setAlignment(Pos.CENTER);
             //*******************DAY********************
-            TextField day = new TextField("What day is the lecture?");
-            //TODO change to dropboxes
-            day.setOnKeyPressed(e->day.clear());
-            day.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
+            ComboBox day = new ComboBox<>();
+            day.setPromptText("What day is the Lecture");
+
+            day.getItems().addAll("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+
+
+
+
             day.setStyle("-fx-background-color: #787e7d; -fx-border-width: 3px; -fx-border-color: black; -fx-border-style: solid;");
-            day.setAlignment(Pos.CENTER);
+//            day.setAlignment(Pos.CENTER);
             day.setMinWidth(300);
             day.prefHeightProperty().bind(LecturePane.widthProperty());
             day.prefHeightProperty().bind(LecturePane.heightProperty().divide(5));
 
-            day.setOnKeyPressed(e-> {
-                if (day.getText().equals("What day is the lecture?")) {
-                    day.clear();
-                }
-            });
-            day.setOnMouseExited(e-> {
-                if(day.getText().equals("")) {
-                    day.setText("What day is the lecture?");
-                }
-            });
+//
             LecturePane.add(day, 20, 0);
             //*******************TIME********************
-            TextField time = new TextField("When is the lecture?");
-            time.setAlignment(Pos.CENTER);
-            time.setOnKeyPressed(e->time.clear());
+            ComboBox time = new ComboBox();
+            time.setPromptText("What time is the Lecture");
+            time.getItems().addAll("9:00-10:00","10:00-11:00","11:00-12:00","12:00-13:00","13:00-14:00","14:00-15:00","15:00-16:00","16:00-17:00","17:00-18:00");
+//            time.setOnKeyPressed(e->time.clear());
             time.setDisable(true);
-            time.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
+//            time.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
             time.setStyle("-fx-background-color: #787e7d; -fx-border-width: 3px; -fx-border-color: black; -fx-border-style: solid;");
             time.setMinWidth(300);
             time.prefHeightProperty().bind(LecturePane.heightProperty());
             time.prefHeightProperty().bind(LecturePane.heightProperty().divide(5));
 
-            time.setOnKeyPressed(e-> {
-                if (time.getText().equals("When is the lecture?")) {
-                    time.clear();
-                }
-            });
-            time.setOnMouseExited(e-> {
-                if(time.getText().equals("")) {
-                    time.setText("When is the lecture?");
-                }
-            });
+//
             LecturePane.add(time, 20, 1);
             //*******************ROOM********************
             TextField room = new TextField("What room is the lecture?");
             room.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
-            room.setAlignment(Pos.CENTER);
+
             room.setDisable(true);
             room.setStyle("-fx-background-color: #787e7d; -fx-border-width: 3px; -fx-border-color: black; -fx-border-style: solid;");
             room.setOnKeyPressed(e->room.clear());
@@ -204,8 +191,8 @@ public class HelloApplication extends Application {
             module.setDisable(true);
             module.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
             module.setStyle("-fx-background-color: #787e7d; -fx-border-width: 3px; -fx-border-color: black; -fx-border-style: solid;");
-            ;
-            module.setAlignment(Pos.CENTER);
+
+
             module.setOnKeyPressed(e->{
                 if (module.getText().equals("What module is the lecture for?")){
                     module.clear();
@@ -242,8 +229,8 @@ public class HelloApplication extends Application {
 
 
 
-            day.setOnAction(e -> {time.setDisable(false);lectureinfo[0] = day.getText();});
-            time.setOnAction(e->{room.setDisable(false);lectureinfo[1] = time.getText();});
+            day.setOnAction(e -> {time.setDisable(false);lectureinfo[0] = (String) day.getValue();});
+            time.setOnAction(e->{room.setDisable(false);lectureinfo[1] = (String) time.getValue();});
             room.setOnAction(e->{module.setDisable(false);lectureinfo[2] = room.getText();});
             module.setOnAction(e->{submit.setDisable(false);lectureinfo[3] = module.getText();});
             submit.setOnAction(new EventHandler<ActionEvent>() {
@@ -312,7 +299,7 @@ public class HelloApplication extends Application {
             //**************************TIME****************************
             ComboBox time = new ComboBox();
             time.setPromptText("Select  lecture time");
-            time.getItems().addAll("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+            time.getItems().addAll("9:00-10:00","10:00-11:00","11:00-12:00","12:00-13:00","13:00-14:00","14:00-15:00","15:00-16:00","16:00-17:00","17:00-18:00");
 
             time.prefHeightProperty().bind(grid.heightProperty());
             time.prefHeightProperty().bind(grid.heightProperty().divide(5));
@@ -915,17 +902,44 @@ public class HelloApplication extends Application {
 
 
         private void options(Stage stage){
+        stage.setHeight(500);
+        stage.setWidth(800);
         GridPane grid = new GridPane();
+        grid.maxHeightProperty().bind(stage.heightProperty());
+        grid.maxWidthProperty().bind(stage.heightProperty());
+        grid.prefHeightProperty().bind(stage.heightProperty());
+        grid.prefWidthProperty().bind(stage.heightProperty());
         Button menu = new Button("MENU");
         menu.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
-        menu.prefHeightProperty().bind(grid.heightProperty());
+        menu.prefHeightProperty().bind(grid.heightProperty().divide(20));
         menu.prefWidthProperty().bind(grid.widthProperty());
+
         menu.setAlignment(Pos.CENTER);
+        menu.setOnAction(e-> start(stage));
+
+        Button requestroom = new Button("REQUEST ROOM");
+        requestroom.setFont(Font.font("Comic Sans",FontWeight.BOLD,10));
+        requestroom.prefHeightProperty().bind(grid.heightProperty().divide(20));
+        requestroom.prefWidthProperty().bind(grid.widthProperty());
+        requestroom.setAlignment(Pos.CENTER);
 
 
+        TextField text = new TextField();
+        text.setFont(Font.font("Comic Sans",FontWeight.BOLD,40));
+        text.prefHeightProperty().bind(grid.heightProperty());
+        text.prefWidthProperty().bind(grid.widthProperty());
+        text.setStyle("-fx-border-color: BLACK");
+        text.setEditable(false);
+        text.setAlignment(Pos.CENTER);
 
-            menu.setOnAction(e-> start(stage));
-        grid.getChildren().add(menu);
+
+        requestroom.setOnAction(e-> text.setText("ERROR"));
+
+        grid.add(text, 0, 2);
+
+
+        grid.add(menu,0,0);
+        grid.add(requestroom,0,1);
         Scene scene = new Scene(grid);
         stage.setMinWidth(500);
         stage.setMinHeight(500);
